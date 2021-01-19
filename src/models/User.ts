@@ -10,7 +10,7 @@ export default class User{
         private creationDate: Date,
         private updateDate: Date,
         private removeDate: Date,
-        private active: string
+        private isActive: boolean
     ){}
 
     public getId(): number {
@@ -73,12 +73,12 @@ export default class User{
         this.removeDate = removeDate;
     }
 
-    public getActive(): string {
-        return this.active;
+    public isIsActive(): boolean {
+        return this.isActive;
     }
 
-    public setActive(active: string): void {
-        this.active = active;
+    public setIsActive(isActive: boolean): void {
+        this.isActive = isActive;
     }
 
     public save(){

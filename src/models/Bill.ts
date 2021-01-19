@@ -3,19 +3,24 @@ export default class Bill{
     constructor(
         private id: number,
         private name: string,
-        private price: string, 
         private dueDate: Date, 
-        private recursive: string, 
-        private recursionPeriod: string,
-        private type: string, 
-        private installmentPrice: string, 
-        private user: string, 
-        private active: string, 
-        private endRecursion: Date
+        private isRecursive: boolean, 
+        private nameType: string,
+        private userId: number, 
+        private isActive: boolean, 
+        private endRecursion: Date,
+        private paymenyMethod: number,
+        private totalPrice: string,
+        private installmentNumber: number,
+        private entry: number
     ){}
 
     public getId(): number {
         return this.id;
+    }
+
+    public setId(id: number): void {
+        this.id = id;
     }
 
     public getName(): string {
@@ -26,12 +31,12 @@ export default class Bill{
         this.name = name;
     }
 
-    public getPrice(): string {
-        return this.price;
+    public getTotalPrice(): string {
+        return this.totalPrice;
     }
 
-    public setPrice(price: string): void {
-        this.price = price;
+    public setTotalPrice(price: string): void {
+        this.totalPrice = price;
     }
 
     public getDueDate(): Date {
@@ -42,52 +47,36 @@ export default class Bill{
         this.dueDate = dueDate;
     }
 
-    public getRecursive(): string {
-        return this.recursive;
+    public getIsRecursive(): boolean {
+        return this.isRecursive;
     }
 
-    public setRecursive(recursive: string): void {
-        this.recursive = recursive;
+    public setIsRecursive(isRecursive: boolean): void {
+        this.isRecursive = isRecursive;
     }
 
-    public getRecursionPeriod(): string {
-        return this.recursionPeriod;
+    public getNameType(): string {
+        return this.nameType;
     }
 
-    public setRecursionPeriod(recursionPeriod: string): void {
-        this.recursionPeriod = recursionPeriod;
+    public setNameType(nameType: string): void {
+        this.nameType = nameType;
     }
 
-    public getType(): string {
-        return this.type;
+    public getUserId(): number {
+        return this.userId;
     }
 
-    public setType(type: string): void {
-        this.type = type;
+    public setUserId(userId: number): void {
+        this.userId = userId;
     }
 
-    public getInstallmentPrice(): string {
-        return this.installmentPrice;
+    public getIsActive(): boolean{
+        return this.isActive;
     }
 
-    public setInstallmentPrice(installmentPrice: string): void {
-        this.installmentPrice = installmentPrice;
-    }
-
-    public getUser(): string {
-        return this.user;
-    }
-
-    public setUser(user: string): void {
-        this.user = user;
-    }
-
-    public getActive(): string {
-        return this.active;
-    }
-
-    public setActive(active: string): void {
-        this.active = active;
+    public setIsActive(isActive: boolean): void {
+        this.isActive = isActive;
     }
 
     public getEndRecursion(): Date {
@@ -96,5 +85,29 @@ export default class Bill{
 
     public setEndRecursion(endRecursion: Date): void {
         this.endRecursion = endRecursion;
+    }
+
+    public getPaymenyMethod(): number {
+        return this.paymenyMethod;
+    }
+
+    public setPaymenyMethod(paymenyMethod: number): void {
+        this.paymenyMethod = paymenyMethod;
+    }
+
+    public getInstallmentNumber(): number {
+        return this.installmentNumber;
+    }
+
+    public setInstallmentNumber(installmentNumber: number): void {
+        this.installmentNumber = installmentNumber;
+    }
+
+    public getEntry(): number {
+        return this.entry;
+    }
+
+    public setEntry(entry: number): void {
+        this.entry = entry;
     }
 }
