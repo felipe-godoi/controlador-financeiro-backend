@@ -12,7 +12,8 @@ export default class Bill{
         private paymenyMethod: number,
         private totalPrice: string,
         private installmentNumber: number,
-        private entry: number
+        private entry: number,
+        private categoryId: number
     ){}
 
     public getId(): number {
@@ -109,5 +110,13 @@ export default class Bill{
 
     public setEntry(entry: number): void {
         this.entry = entry;
+    }
+
+    public getCategoryId(): number {
+        return this.categoryId;
+    }
+
+    public setCategoryId(categoryId: number): void {
+        this.categoryId = categoryId;
     }
 }
