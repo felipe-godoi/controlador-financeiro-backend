@@ -87,6 +87,7 @@ class Database{
         this.connection.query(paymentMethod, []);
         this.connection.query(bill, []);
         this.connection.query(payment, []);
+        this.connection.query(category, []);
     }
 }
 

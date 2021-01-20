@@ -7,17 +7,18 @@ dotenv.config({
 import express, { json } from "express";
 import cors from "cors";
 import routes from "./routes";
-import connection from "./config/database";
 
 const app = express();
 
 app.use(json());
 app.use(cors());
 
+app.get('/', (req, res) => {
+  return res.send("Servidor ativo!");
+});
+
 app.use('/api', routes);
 
-connection
-
-app.listen(3000, () => {
-  console.log("🚀 Server started on http://localhost:3000");
+app.listen(8100, () => {
+  console.log("🚀 Server started on http://localhost:8100");
 });
