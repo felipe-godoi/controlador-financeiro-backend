@@ -4,8 +4,20 @@ import User, { Login } from "../models/User";
 export default class UserController {
     static async insert(req: Request, res: Response){
         let body = req.body;
+        let date = new Date();
 
-        let user = new User(0, body.username, body.password, body.email, body.name, body.creationDate, body.updateDate, body.removeDate, body.isActive);
+        let user = new User(
+            0, 
+            body.username,
+            body.password,
+            body.email,
+            body.name,
+            date,
+            date,
+            null,
+            true,
+            true
+        );
         let response = await user.save();
         
         return res.json(response.toJson());

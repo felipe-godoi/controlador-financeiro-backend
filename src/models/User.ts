@@ -1,20 +1,6 @@
 import connection from "../config/database";
+import Response from './BasicResponse';
 
-class Response{
-    constructor(
-        public response: any,
-        public error: boolean
-    ){}
-
-    toJson(): Object{
-        let json = {
-            "response": this.response,
-            "error": this.error
-        };
-
-        return json;
-    }
-}
 
 export class Login{
     constructor(
@@ -32,9 +18,26 @@ export default class User{
         private name: string,
         private creationDate: Date,
         private updateDate: Date,
-        private removeDate: Date,
+        private deletedDate: Date | null,
+        private deleted: boolean,
         private isActive: boolean
     ){}
+
+    public getDeletedDate(): Date | null{
+        return this.deletedDate;
+    }
+
+    public setDeletedDate(deletedDate: Date): void {
+        this.deletedDate = deletedDate;
+    }
+
+    public getDeleted(): boolean {
+        return this.deleted;
+    }
+
+    public setDeleted(deleted: boolean): void {
+        this.deleted = deleted;
+    }
 
     public getId(): number {
         return this.id;
@@ -88,14 +91,6 @@ export default class User{
         this.updateDate = updateDate;
     }
 
-    public getRemoveDate(): Date {
-        return this.removeDate;
-    }
-
-    public setRemoveDate(removeDate: Date): void {
-        this.removeDate = removeDate;
-    }
-
     public isIsActive(): boolean {
         return this.isActive;
     }
@@ -113,7 +108,8 @@ export default class User{
             json.name,
             json.creationDate,
             json.updateDate,
-            json.removeDate,
+            json.deletedDate,
+            json.deleted,
             json.isActive
         )
     }
@@ -128,9 +124,10 @@ export default class User{
                 name,
                 creationDate,
                 updateDate,
-                removeDate,
+                deletedDate,
+                deleted,
                 isActive
-            ) VALUES (?,?,?,?,?,?,?,?)
+            ) VALUES (?,?,?,?,?,?,?,?,?)
             `;
     
             let params = [
@@ -140,7 +137,8 @@ export default class User{
                 this.name,
                 this.creationDate,
                 this.updateDate,
-                this.removeDate,
+                this.deletedDate,
+                this.deleted,
                 this.isActive
             ];
     
@@ -153,6 +151,155 @@ export default class User{
                 }
 
                 response = new Response(result.insertId, false);
+                resolve(response); 
+            });
+        });
+    }
+
+    public deactivate(): Promise<Response>{
+        return new Promise((resolve, reject) => {
+            let date = new Date();
+
+            let query = `
+            UPDATE USERS
+                set isActive = 0,
+                set updateDate = ${date}
+            ) where id=?
+            `;
+    
+            let params = [
+                this.id
+            ];
+    
+            connection.query(query, params, (err, result) => {
+                let response;
+                
+                if (err){
+                    response = new Response(err.stack, true);
+                    reject(response); 
+                }
+
+                response = new Response("Desativado com sucesso!", false);
+                resolve(response); 
+            });
+        });
+    } 
+
+    public activate(): Promise<Response>{
+        return new Promise((resolve, reject) => {
+            let date = new Date();
+
+            let query = `
+            UPDATE USERS
+                set isActive = 1,
+                set updateDate = ${date}
+            ) where id=?
+            `;
+    
+            let params = [
+                this.id
+            ];
+    
+            connection.query(query, params, (err, result) => {
+                let response;
+                
+                if (err){
+                    response = new Response(err.stack, true);
+                    reject(response); 
+                }
+
+                response = new Response("Reativado com sucesso!", false);
+                resolve(response); 
+            });
+        });
+    } 
+
+    public update(): Promise<Response>{
+        return new Promise((resolve, reject) => {
+            let date = new Date();
+
+            let query = `
+            UPDATE USERS
+                set password = ?,
+                set name = ?,
+                set updateDate = ${date}
+            where id=?
+            `;
+    
+            let params = [
+                this.password,
+                this.name,
+                this.updateDate,
+                this.id
+            ];
+    
+            connection.query(query, params, (err, result) => {
+                let response;
+                
+                if (err){
+                    response = new Response(err.stack, true);
+                    reject(response); 
+                }
+
+                response = new Response("Atualizado com sucesso!", false);
+                resolve(response); 
+            });
+        });
+    }
+
+    public remove(): Promise<Response>{
+        return new Promise((resolve, reject) => {
+            let date = new Date();
+
+            let query = `
+            UPDATE USERS
+                set deleted=1,
+                set updateDate = ${date}
+            where id=?
+            `;
+    
+            let params = [
+                this.id
+            ];
+    
+            connection.query(query, params, (err, result) => {
+                let response;
+                
+                if (err){
+                    response = new Response(err.stack, true);
+                    reject(response); 
+                }
+
+                response = new Response("Removido com sucesso!", false);
+                resolve(response); 
+            });
+        });
+    }
+
+    public restore(): Promise<Response>{
+        return new Promise((resolve, reject) => {
+            let date = new Date();
+
+            let query = `
+            UPDATE USERS
+                set deleted=0,
+                set updateDate = ${date}
+            where id=?
+            `;
+    
+            let params = [
+                this.id
+            ];
+    
+            connection.query(query, params, (err, result) => {
+                let response;
+                
+                if (err){
+                    response = new Response(err.stack, true);
+                    reject(response); 
+                }
+
+                response = new Response("Restaurado com sucesso!", false);
                 resolve(response); 
             });
         });
