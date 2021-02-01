@@ -17,6 +17,6 @@ app.get('/', (req, res) => {
 
 app.use('/api', routes);
 
-app.listen(8100, () => {
-  console.log("🚀 Server started on http://localhost:8100");
+app.listen(3000, () => {
+  console.log("🚀 Server started on http://localhost:3000");
 });
